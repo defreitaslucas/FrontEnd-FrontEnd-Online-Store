@@ -1,0 +1,17 @@
+.category-container {
+  align-items: baseline;
+  border: 1px solid black;
+  border-radius: 7px;
+  padding: 1vw;
+}
+
+.category-container > p {
+  border-bottom: 1px solid black;
+  padding-bottom: 0.5vw;
+  text-align: center;
+  width: 100%;
+}
+
+.category {
+  margin-bottom: 0.5vw;
+}
