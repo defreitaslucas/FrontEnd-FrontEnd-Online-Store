@@ -2,14 +2,14 @@ import React from 'react';
 import './App.css';
 import { BrowserRouter } from 'react-router-dom/cjs/react-router-dom.min';
 import { Route, Switch } from 'react-router-dom';
-import QuerySearch from './pages/QuerySearch';
+import Search from './components/Search';
 /* import * as api from './services/api'; */
 
 function App() {
   return (
     <BrowserRouter>
       <Switch>
-        <Route path="/" component={ QuerySearch } />
+        <Route path="/" component={ Search } />
       </Switch>
     </BrowserRouter>
   );

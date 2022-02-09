@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import CardItem from '../components/CardItem';
+import CardItem from './CardItem';
 import { getProductsFromCategoryAndQuery } from '../services/api';
 
-export default class QuerySearch extends Component {
+export default class Search extends Component {
   state = { queryInput: '', listProducts: [], loadedProducts: false }
 
   handleInput = ({ target: { name, value } }) => {
