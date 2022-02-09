@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import CardItem from './CardItem';
 import { getProductsFromCategoryAndQuery } from '../services/api';
+import './styles/search.css';
 
 export default class Search extends Component {
   state = { queryInput: '', listProducts: [], loadedProducts: false }
@@ -24,7 +25,7 @@ export default class Search extends Component {
     const { listProducts } = this.state;
     if (!listProducts.length) return (<h2>Nenhum produto foi encontrado</h2>);
     return (
-      <div>
+      <div className="results-container">
         { listProducts.map((product) => (
           <div key={ product.id }>
             <CardItem { ...product } />
@@ -35,7 +36,7 @@ export default class Search extends Component {
   render() {
     const { queryInput, loadedProducts } = this.state;
     return (
-      <div>
+      <div className="search-container">
         <h2
           data-testid="home-initial-message"
         >
