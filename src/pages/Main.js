@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Categorias from '../components/Categorias';
 
-export default class Search extends Component {
+export default class Main extends Component {
   render() {
     return (
       <div>
