@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { getCategories } from '../services/api';
 
-export default class Search extends Component {
+export default class Categorias extends Component {
   state = {
     categorias: [],
   }
@@ -38,11 +38,6 @@ export default class Search extends Component {
               </div>
             ))
           }
-        </div>
-        <div
-          data-testid="home-initial-message"
-        >
-          Digite algum termo de pesquisa ou escolha uma categoria.
         </div>
       </div>
     );
