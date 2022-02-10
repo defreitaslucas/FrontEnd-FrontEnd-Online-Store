@@ -50,7 +50,7 @@ export default class Main extends Component {
       <div className="results-container">
         { listProducts.map((product) => (
           <div key={ product.id }>
-            <CardItem { ...product } />
+            <CardItem { ...product } listProducts={ listProducts } />
           </div>))}
       </div>);
   }
