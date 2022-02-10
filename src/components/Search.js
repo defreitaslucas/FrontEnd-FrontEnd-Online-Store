@@ -1,40 +1,15 @@
 import React, { Component } from 'react';
-import CardItem from './CardItem';
-import { getProductsFromCategoryAndQuery } from '../services/api';
 import './styles/search.css';
+import { string, func } from 'prop-types';
 
 export default class Search extends Component {
-  state = { queryInput: '', listProducts: [], loadedProducts: false }
-
-  handleInput = ({ target: { name, value } }) => {
-    this.setState({ [name]: value });
-  }
-
-  handleClick = async () => {
-    const { queryInput } = this.state;
-    const response = await getProductsFromCategoryAndQuery(queryInput);
-    if (response) {
-      this.setState({
-        loadedProducts: true,
-        listProducts: response.results,
-      });
-    }
-  }
-
-  productsFounded = () => {
-    const { listProducts } = this.state;
-    if (!listProducts.length) return (<h2>Nenhum produto foi encontrado</h2>);
-    return (
-      <div className="results-container">
-        { listProducts.map((product) => (
-          <div key={ product.id }>
-            <CardItem { ...product } />
-          </div>))}
-      </div>);
-  }
-
   render() {
-    const { queryInput, loadedProducts } = this.state;
+    const {
+      queryInput,
+      handleInput,
+      handleClick,
+    } = this.props;
+
     return (
       <div className="search-container">
         <h2
@@ -49,19 +24,24 @@ export default class Search extends Component {
             placeholder="Digite o termo de pesquisa"
             value={ queryInput }
             name="queryInput"
-            onChange={ this.handleInput }
+            onChange={ handleInput }
           />
           <button
             type="button"
             data-testid="query-button"
-            onClick={ this.handleClick }
+            onClick={ handleClick }
 
           >
             Pesquisar
           </button>
         </form>
-        { loadedProducts && this.productsFounded() }
       </div>
     );
   }
 }
+
+Search.propTypes = {
+  queryInput: string.isRequired,
+  handleInput: func.isRequired,
+  handleClick: func.isRequired,
+};
