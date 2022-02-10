@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { getCategories } from '../services/api';
+import './styles/categorias.css';
 
 export default class Categorias extends Component {
   state = {
@@ -18,27 +19,26 @@ export default class Categorias extends Component {
   render() {
     const { categorias } = this.state;
     return (
-      <div>
-        <div>
-          {
-            categorias.map((categoria) => (
-              <div key={ categoria.id }>
-                <label
-                  htmlFor={ categoria.id }
-                  data-testid="category"
-                >
-                  <input
-                    type="radio"
-                    name="radio-categoria"
-                    id={ categoria.id }
-                    value={ categoria.name }
-                  />
-                  {categoria.name}
-                </label>
-              </div>
-            ))
-          }
-        </div>
+      <div className="category-container">
+        <p>Categorias:</p>
+        {
+          categorias.map((categoria) => (
+            <div className="category" key={ categoria.id }>
+              <label
+                htmlFor={ categoria.id }
+                data-testid="category"
+              >
+                <input
+                  type="radio"
+                  name="radio-categoria"
+                  id={ categoria.id }
+                  value={ categoria.name }
+                />
+                {categoria.name}
+              </label>
+            </div>
+          ))
+        }
       </div>
     );
   }

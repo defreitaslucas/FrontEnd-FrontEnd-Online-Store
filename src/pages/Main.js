@@ -8,15 +8,13 @@ import './styles/main.css';
 export default class Main extends Component {
   render() {
     return (
-      <div>
-        <div className="main-container">
-          <Categorias />
-          <Search />
-          <Link data-testid="shopping-cart-button" to="/cart">
-            <img src={ cartIcon } alt="cart icon" />
-          </Link>
-        </div>
-      </div>
+      <main className="main-container">
+        <Categorias />
+        <Search />
+        <Link data-testid="shopping-cart-button" to="/cart">
+          <img src={ cartIcon } alt="cart icon" />
+        </Link>
+      </main>
     );
   }
 }

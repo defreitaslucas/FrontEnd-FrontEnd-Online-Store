@@ -1,0 +1,15 @@
+.card-item {
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 1vw;
+  min-height: 17vw;
+  width: 20vw;
+}
+
+.card-item h3 {
+  text-align: center;
+}

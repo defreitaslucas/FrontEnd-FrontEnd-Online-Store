@@ -1,0 +1,15 @@
+.results-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.search-container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  max-width: 70%;
+}
+
+.search-container input {
+  margin: 1vw;
+}

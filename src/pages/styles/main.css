@@ -1,8 +1,14 @@
 .main-container {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
+  margin-top: 2vw;
 }
 
 .main-container img {
+  aspect-ratio: 1;
   width: 50px;
+}
+
+.main-container > a {
+  height: 50px;
 }
