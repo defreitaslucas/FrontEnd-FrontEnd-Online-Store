@@ -1,64 +1,55 @@
 import React, { Component } from 'react';
-import { getProductFromId } from '../services/api';
-import minusIcon from '../images/minus-solid.svg';
-import plusIcon from '../images/plus-solid.svg';
 import cartIcon from '../images/cart-shopping-solid.svg';
 import returnIcon from '../images/rotate-left-solid.svg';
+import './styles/shoppingCart.css';
 
 // qtd, id
 export default class ShoppingCart extends Component {
   state = {
     items: [],
-    products: [],
   }
 
   componentDidMount() {
-    const { items, products } = this.state;
-    this.setState({ items: getItemFromStorage() });
-    items.forEach((item) => {
-      const product = apiRequest(item.id);
-      product.qtd = item.qtd;
-      this.setState({ products: [...products, product] });
-    });
+    this.setState({ items: this.getItemFromStorage() });
   }
 
-  apiRequest = async (item) => getProductFromId(item.id)
-
-  getItemFromStorage = () => JSON.parse(localStorage.getItem(item));
+  getItemFromStorage = () => JSON.parse(localStorage.getItem('cartItems'));
 
   render() {
-    const { products } = this.state;
+    const { items } = this.state;
     const empty = (
       <p data-testid="shopping-cart-empty-message">Seu carrinho está vazio</p>
     );
-    let totalPrice = 0;
+    const totalPrice = 0;
     const cart = (
-      products.map((product) => {
-        const price = toFixed(product.price * product.qtd);
-        totalPrice += price;
-        return (
+      items
+        // .filter((item) => {
+        //   let count = 0;
+        //   items.forEach((item2) => {
+        //     if (item.id === item2.id) {
+        //       count += 1;
+        //     }
+        //   });
+        //   return count > 1;
+        // })
+        .map((product) => (
           <div key={ product.id } className="cart-card">
             <p>X</p>
             <img src={ product.thumbnail } alt={ product.title } />
-            <p>{product.title}</p>
-            <button type="button" data-testid="product-decrease-quantity">
-              <img src={ minusIcon } alt="minus" />
-            </button>
-            <p>{product.qtd}</p>
-            <button type="button" data-testid="product-increase-quantity">
-              <img src={ plusIcon } alt="plus" />
-            </button>
-            <p>{`R$ ${price}`}</p>
+            <p data-testid="shopping-cart-product-name">{product.title}</p>
+            <button type="button" data-testid="product-decrease-quantity">-</button>
+            <p data-testid="shopping-cart-product-quantity">{product.qtd}</p>
+            <button type="button" data-testid="product-increase-quantity">+</button>
+            <p>{`R$ ${product.price}`}</p>
           </div>
-        );
-      })
+        ))
     );
     return (
       <div>
         <img src={ returnIcon } alt="return" />
         <img src={ cartIcon } alt="cart" />
 
-        {products.length > 0 ? cart : empty}
+        {items.length > 0 ? cart : empty}
         <h4>Valor Total da Compra: </h4>
         <p>
           R$

@@ -7,15 +7,20 @@ export default class CardButton extends Component {
 
     const addedProductId = target.parentElement.parentElement.id;
 
-    const porductObj = listProducts.find((item) => item.id === addedProductId);
+    const productObj = listProducts.find((item) => item.id === addedProductId);
+    productObj.qtd = 1;
     let productsArr = [];
     if (!localStorage.getItem('cartItems')) {
-      productsArr.push(porductObj);
+      productsArr.push(productObj);
       localStorage.setItem('cartItems', JSON.stringify(productsArr));
     } else {
       productsArr = JSON.parse(localStorage.getItem('cartItems'));
-      productsArr.push(porductObj);
-      localStorage.setItem('cartItems', JSON.stringify(productsArr));
+      if (productsArr.find((item) => item.id !== productObj.id)) {
+        productsArr.push(productObj);
+        localStorage.setItem('cartItems', JSON.stringify(productsArr));
+      } else {
+        productObj.qtd += 1;
+      }
     }
   }
 
