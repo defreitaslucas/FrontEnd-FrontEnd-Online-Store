@@ -26,12 +26,12 @@ export default class CardItem extends Component {
           <img src={ thumbnail } alt={ title } />
           <p>{ price }</p>
         </Link>
-        { freeShipping &&
-        (<div>
-          <h4 data-testid="free-shipping">Frete Grátis</h4>
-          <img src={ truckFast }/>
-        </div>)
-       }
+        { freeShipping
+        && (
+          <div>
+            <h4 data-testid="free-shipping">Frete Grátis</h4>
+            <img src={ truckFast } alt="frete grátis" />
+          </div>)}
         <CardButton listProducts={ listProducts } />
       </div>
     );
