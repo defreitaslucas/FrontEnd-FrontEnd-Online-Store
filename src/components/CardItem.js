@@ -3,6 +3,7 @@ import PropTypes, { string, number, bool } from 'prop-types';
 import { Link } from 'react-router-dom';
 import './styles/cardItem.css';
 import CardButton from './CartButton';
+import truckFast from '../images/truck-fast-solid.svg';
 
 export default class CardItem extends Component {
   render() {
@@ -25,7 +26,12 @@ export default class CardItem extends Component {
           <img src={ thumbnail } alt={ title } />
           <p>{ price }</p>
         </Link>
-        { freeShipping && <h4 data-testid="free-shipping">Frete Grátis</h4>}
+        { freeShipping &&
+        (<div>
+          <h4 data-testid="free-shipping">Frete Grátis</h4>
+          <img src={ truckFast }/>
+        </div>)
+       }
         <CardButton listProducts={ listProducts } />
       </div>
     );
