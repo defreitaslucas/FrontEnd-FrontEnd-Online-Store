@@ -141,7 +141,7 @@ export default class ShoppingCart extends Component {
         {/* <img src={ cartIcon } alt="cart" /> */}
         {!loading ? cart : empty}
         {items && totalArea}
-        <Link to="/checkout">Checkout</Link>
+        <Link data-testid="checkout-products" to="/checkout">Checkout</Link>
       </div>
     );
   }

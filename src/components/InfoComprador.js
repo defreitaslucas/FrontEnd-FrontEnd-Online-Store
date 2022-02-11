@@ -18,7 +18,7 @@ export default class InfoComprador extends Component {
           </label>
           <label htmlFor="input-cpf">
             <input
-              type="number"
+              type="text"
               name="input-cpf"
               data-testid="checkout-cpf"
               placeholder="CPF"
@@ -34,7 +34,7 @@ export default class InfoComprador extends Component {
           </label>
           <label htmlFor="input-telefone">
             <input
-              type="number"
+              type="text"
               name="input-telefone"
               data-testid="checkout-phone"
               placeholder="Celular"
@@ -42,7 +42,7 @@ export default class InfoComprador extends Component {
           </label>
           <label htmlFor="input-cep">
             <input
-              type="number"
+              type="text"
               name="input-cep"
               data-testid="checkout-cep"
               placeholder="CEP"
@@ -113,11 +113,13 @@ export default class InfoComprador extends Component {
         <h2>Método de Pagamento</h2>
         <form id="method-payment">
           <label htmlFor="boleto">
-            <input type="radio" id="boleto" name="boleto" value="" />
+            <p>Boleto</p>
+            <input type="radio" id="boleto" name="method-payment" value="" />
             <img src={ boleto } alt="boleto" />
           </label>
           <label htmlFor="credit-card">
-            <input type="radio" id="credit-card" name="credit-card" value="" />
+            <p>Cartão de Crédito</p>
+            <input type="radio" id="credit-card" name="method-payment" value="" />
             <img src={ credCard } alt="cartao-credito" />
           </label>
         </form>
