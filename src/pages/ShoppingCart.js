@@ -23,15 +23,6 @@ export default class ShoppingCart extends Component {
     const totalPrice = 0;
     const cart = (
       items
-        // .filter((item) => {
-        //   let count = 0;
-        //   items.forEach((item2) => {
-        //     if (item.id === item2.id) {
-        //       count += 1;
-        //     }
-        //   });
-        //   return count > 1;
-        // })
         .map((product) => (
           <div key={ product.id } className="cart-card">
             <p>X</p>
@@ -48,8 +39,7 @@ export default class ShoppingCart extends Component {
       <div>
         <img src={ returnIcon } alt="return" />
         <img src={ cartIcon } alt="cart" />
-
-        {items.length > 0 ? cart : empty}
+        {!items.length ? empty : cart}
         <h4>Valor Total da Compra: </h4>
         <p>
           R$

@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { string, shape } from 'prop-types';
 import { getProductFromId } from '../services/api';
+import addProduct from '../services/cartItemsLocal';
+import cartIcon from '../images/cart-shopping-solid.svg';
 
 export default class Details extends Component {
   state = { loading: false, infoProduct: '' };
@@ -21,11 +24,21 @@ export default class Details extends Component {
     }
   }
 
+  addToLocalFromPageDetails = () => {
+    const { infoProduct } = this.state;
+    infoProduct.qtd = 1;
+    addProduct(infoProduct);
+  }
+
   render() {
     const { infoProduct: { title, price, thumbnail }, loading } = this.state;
     return (
       <div>
         Detalhes
+        <Link data-testid="shopping-cart-button" to="/cart">
+          <img src={ cartIcon } alt="cart icon" />
+        </Link>
+
         { loading
           ? <h1>Loading</h1>
           : (
@@ -38,8 +51,17 @@ export default class Details extends Component {
                 />
                 <p>{ price }</p>
               </div>
-
-              <h1>{title}</h1>
+              {/*  <h1>{title}</h1> */}
+              <div>
+                <button
+                  data-testid="product-detail-add-to-cart"
+                  type="button"
+                  id="productDetailButton"
+                  onClick={ this.addToLocalFromPageDetails }
+                >
+                  Adicionar ao carrinho
+                </button>
+              </div>
             </section>)}
       </div>
     );
