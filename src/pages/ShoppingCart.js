@@ -7,12 +7,15 @@ import './styles/shoppingCart.css';
 export default class ShoppingCart extends Component {
   state = {
     items: [],
-    loading: false,
+    loading: true,
     totalPrice: 0,
   }
 
   componentDidMount() {
-    this.setState({ loading: true, items: this.getItemFromStorage() }, this.filterArr);
+    const storage = this.getItemFromStorage();
+    if (storage !== null) {
+      this.setState({ loading: true, items: storage }, this.filterArr);
+    }
   }
 
   filterArr = () => {
@@ -47,6 +50,7 @@ export default class ShoppingCart extends Component {
     items.forEach((item) => {
       total += item.price * item.qtd;
     });
+    total.toFixed(2);
     this.setState({ totalPrice: total });
   };
 
@@ -75,6 +79,7 @@ export default class ShoppingCart extends Component {
     const empty = (
       <p data-testid="shopping-cart-empty-message">Seu carrinho está vazio</p>
     );
+
     const cart = (
       items
         .map((product) => (
@@ -105,17 +110,24 @@ export default class ShoppingCart extends Component {
           </div>
         ))
     );
-    return (
-      <div>
-        <img src={ returnIcon } alt="return" />
-        <img src={ cartIcon } alt="cart" />
-        {loading ? empty : cart}
+
+    const totalArea = (
+      <>
         <h4>Valor Total da Compra: </h4>
         <p>
           R$
           {' '}
           {totalPrice}
         </p>
+      </>
+    );
+
+    return (
+      <div>
+        <img src={ returnIcon } alt="return" />
+        <img src={ cartIcon } alt="cart" />
+        {!loading ? cart : empty}
+        {items && totalArea}
       </div>
     );
   }
