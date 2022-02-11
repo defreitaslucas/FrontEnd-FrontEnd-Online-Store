@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes, { string, number } from 'prop-types';
+import addProduct from '../services/cartItemsLocal';
 
 export default class CardButton extends Component {
-  addCartLocalStorage = ({ target }) => {
+  /*  addCartLocalStorage = ({ target }) => {
     const { listProducts } = this.props;
-
     const addedProductId = target.parentElement.parentElement.id;
 
     const productObj = listProducts.find((item) => item.id === addedProductId);
@@ -22,6 +22,13 @@ export default class CardButton extends Component {
         productObj.qtd += 1;
       }
     }
+  } */
+  addToLocalFromPageDetails = ({ target }) => {
+    const { listProducts } = this.props;
+    const addedProductId = target.parentElement.parentElement.id;
+    const productObj = listProducts.find((item) => item.id === addedProductId);
+    productObj.qtd = 1;
+    addProduct(productObj);
   }
 
   render() {
@@ -31,7 +38,8 @@ export default class CardButton extends Component {
           data-testid="product-add-to-cart"
           type="button"
           id="cartButton"
-          onClick={ this.addCartLocalStorage }
+          /* onClick={ this.addCartLocalStorage } */
+          onClick={ this.addToLocalFromPageDetails }
         >
           Add
         </button>
