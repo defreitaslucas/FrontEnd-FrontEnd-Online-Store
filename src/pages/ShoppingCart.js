@@ -7,10 +7,37 @@ import './styles/shoppingCart.css';
 export default class ShoppingCart extends Component {
   state = {
     items: [],
+    loading: false,
   }
 
   componentDidMount() {
-    this.setState({ items: this.getItemFromStorage() });
+    this.setState({ loading: true, items: this.getItemFromStorage() }, this.filterArr);
+  }
+
+  filterArr = () => {
+    const { items } = this.state;
+    let count = 0;
+    const FilteredArr = items
+      .reduce((acc, item) => {
+        const itemsFiltered = items.filter((item2) => item.id === item2.id);
+        const newItems = {
+          ...item,
+          qtd: itemsFiltered.length,
+        };
+        count = 0;
+        count += 1;
+
+        acc.forEach((product) => {
+          if (product.id === item.id) {
+            count += 1;
+          }
+        });
+        if (count > 1) return acc;
+
+        acc.push(newItems);
+        return acc;
+      }, []);
+    this.setState({ items: FilteredArr, loading: false });
   }
 
   getItemFromStorage = () => JSON.parse(localStorage.getItem('cartItems'));
@@ -49,12 +76,12 @@ export default class ShoppingCart extends Component {
   }
 
   render() {
-    const { items } = this.state;
+    const { items, loading } = this.state;
     const empty = (
       <p data-testid="shopping-cart-empty-message">Seu carrinho está vazio</p>
     );
     const totalPrice = 0;
-    /*    const cart = (
+    const cart = (
       items
         .map((product) => (
           <div key={ product.id } className="cart-card">
@@ -65,52 +92,29 @@ export default class ShoppingCart extends Component {
               type="button"
               name="decrease"
               data-testid="product-decrease-quantity"
-              onClick={ this.handleClick}>-</button>
+              onClick={ this.handleClick }
+            >
+              -
+            </button>
             <p data-testid="shopping-cart-product-quantity">{product.qtd}</p>
             <button
               type="button"
               name="increase"
+              id={ product.id }
               data-testid="product-increase-quantity"
-              onClick={ this.handleClick}>+</button>
+              onClick={ this.handleClick }
+            >
+              +
+            </button>
             <p>{`R$ ${product.price}`}</p>
           </div>
         ))
-    ); */
+    );
     return (
       <div>
         <img src={ returnIcon } alt="return" />
         <img src={ cartIcon } alt="cart" />
-        {!items
-          ? empty
-          : (
-            items
-              .map((product) => (
-                <div key={ product.id } className="cart-card">
-                  <button type="button">X</button>
-                  <img src={ product.thumbnail } alt={ product.title } />
-                  <p data-testid="shopping-cart-product-name">{product.title}</p>
-                  <button
-                    type="button"
-                    name="decrease"
-                    data-testid="product-decrease-quantity"
-                    onClick={ this.handleClick }
-                  >
-                    -
-                  </button>
-                  <p data-testid="shopping-cart-product-quantity">{product.qtd}</p>
-                  <button
-                    type="button"
-                    name="increase"
-                    id={ product.id }
-                    data-testid="product-increase-quantity"
-                    onClick={ this.handleClick }
-                  >
-                    +
-                  </button>
-                  <p>{`R$ ${product.price}`}</p>
-                </div>
-              ))
-          )}
+        {loading ? empty : cart}
         <h4>Valor Total da Compra: </h4>
         <p>
           R$
