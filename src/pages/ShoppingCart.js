@@ -8,7 +8,7 @@ export default class ShoppingCart extends Component {
   state = {
     items: [],
   }
-  
+
   componentDidMount() {
     this.setState({ items: this.getItemFromStorage() });
   }
@@ -16,13 +16,34 @@ export default class ShoppingCart extends Component {
   getItemFromStorage = () => JSON.parse(localStorage.getItem('cartItems'));
 
   handleClick = ({ target, target: { name } }) => {
+    const { items } = this.state;
+    const productId = target.id;
     if (name === 'increase') {
-      const valueIncrease = target.previousSibling;
-      valueIncrease.innerText = (Number(valueIncrease.innerText) + 1).toString();
+      // const { items } = this.state;
+      // console.log('items velho:', items);
+      // const valueIncrease = target.previousSibling;
+      // valueIncrease.innerText = (Number(valueIncrease.innerText) + 1).toString();
+      const newValue = items.find((item) => item.id === productId).qtd + 1;
+      // const productId = target.id;
+      items.find((item) => item.id === productId).qtd = newValue;
+      // items[0].qtd = newValue;
+      const newItems = items;
+      this.setState({
+        items: newItems,
+      });
+      // console.log('items novo:', items);
     } else {
       const valueDecrease = target.nextSibling;
       if (Number(valueDecrease.innerText) > 1) {
-        valueDecrease.innerText = (Number(valueDecrease.innerText) - 1).toString();
+        // valueDecrease.innerText = (Number(valueDecrease.innerText) - 1).toString();
+        const newValue1 = items.find((item) => item.id === productId).qtd - 1;
+        // const productId2 = target.id;
+        items.find((item) => item.id === productId).qtd = newValue1;
+        // items[0].qtd = newValue1;
+        const newItems1 = items;
+        this.setState({
+          items: newItems1,
+        });
       }
     }
   }
@@ -80,6 +101,7 @@ export default class ShoppingCart extends Component {
                   <button
                     type="button"
                     name="increase"
+                    id={ product.id }
                     data-testid="product-increase-quantity"
                     onClick={ this.handleClick }
                   >
