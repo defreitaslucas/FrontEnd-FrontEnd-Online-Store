@@ -27,7 +27,7 @@ export default class CardButton extends Component {
     const { listProducts } = this.props;
     const addedProductId = target.parentElement.parentElement.id;
     const productObj = listProducts.find((item) => item.id === addedProductId);
-    productObj.qtd = 1;
+    // productObj.qtd = 1;
     addProduct(productObj);
   }
 

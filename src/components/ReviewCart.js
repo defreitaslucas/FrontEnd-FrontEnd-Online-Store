@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 // import cartIcon from '../images/cart-shopping-solid.svg';
-import returnIcon from '../images/rotate-left-solid.svg';
-import './styles/shoppingCart.css';
+// import returnIcon from '../images/rotate-left-solid.svg';
+import '../pages/styles/shoppingCart.css';
 
-// qtd, id
-export default class ShoppingCart extends Component {
+export default class ReviewCart extends Component {
   state = {
     items: [],
     loading: true,
@@ -97,28 +96,9 @@ export default class ShoppingCart extends Component {
       items
         .map((product) => (
           <div key={ product.id } className="cart-card">
-            <button type="button">X</button>
             <img src={ product.thumbnail } alt={ product.title } />
             <p data-testid="shopping-cart-product-name">{product.title}</p>
-            <button
-              type="button"
-              name="decrease"
-              data-testid="product-decrease-quantity"
-              onClick={ this.handleClick }
-              id={ product.id }
-            >
-              -
-            </button>
             <p data-testid="shopping-cart-product-quantity">{product.qtd}</p>
-            <button
-              type="button"
-              name="increase"
-              id={ product.id }
-              data-testid="product-increase-quantity"
-              onClick={ this.handleClick }
-            >
-              +
-            </button>
             <p>{`R$ ${product.price * product.qtd}`}</p>
           </div>
         ))
@@ -137,11 +117,9 @@ export default class ShoppingCart extends Component {
 
     return (
       <div>
-        <Link to="/"><img src={ returnIcon } alt="return" /></Link>
-        {/* <img src={ cartIcon } alt="cart" /> */}
+        <Link to="/cart">Cart</Link>
         {!loading ? cart : empty}
         {items && totalArea}
-        <Link to="/checkout">Checkout</Link>
       </div>
     );
   }
