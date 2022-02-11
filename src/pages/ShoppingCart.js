@@ -8,6 +8,7 @@ export default class ShoppingCart extends Component {
   state = {
     items: [],
     loading: false,
+    totalPrice: 0,
   }
 
   componentDidMount() {
@@ -37,50 +38,43 @@ export default class ShoppingCart extends Component {
         acc.push(newItems);
         return acc;
       }, []);
-    this.setState({ items: FilteredArr, loading: false });
+    this.setState({ items: FilteredArr, loading: false }, this.updateTotalPrice);
   }
+
+  updateTotalPrice = () => {
+    const { items } = this.state;
+    let total = 0;
+    items.forEach((item) => {
+      total += item.price * item.qtd;
+    });
+    this.setState({ totalPrice: total });
+  };
 
   getItemFromStorage = () => JSON.parse(localStorage.getItem('cartItems'));
 
   handleClick = ({ target, target: { name } }) => {
     const { items } = this.state;
-    const productId = target.id;
+    const { id } = target;
     if (name === 'increase') {
-      // const { items } = this.state;
-      // console.log('items velho:', items);
-      // const valueIncrease = target.previousSibling;
-      // valueIncrease.innerText = (Number(valueIncrease.innerText) + 1).toString();
-      const newValue = items.find((item) => item.id === productId).qtd + 1;
-      // const productId = target.id;
-      items.find((item) => item.id === productId).qtd = newValue;
-      // items[0].qtd = newValue;
-      const newItems = items;
-      this.setState({
-        items: newItems,
+      const product = items.map((item) => {
+        if (item.id === id) item.qtd += 1;
+        return item;
       });
-      // console.log('items novo:', items);
+      this.setState({ items: product }, this.updateTotalPrice);
     } else {
-      const valueDecrease = target.nextSibling;
-      if (Number(valueDecrease.innerText) > 1) {
-        // valueDecrease.innerText = (Number(valueDecrease.innerText) - 1).toString();
-        const newValue1 = items.find((item) => item.id === productId).qtd - 1;
-        // const productId2 = target.id;
-        items.find((item) => item.id === productId).qtd = newValue1;
-        // items[0].qtd = newValue1;
-        const newItems1 = items;
-        this.setState({
-          items: newItems1,
-        });
-      }
+      const product = items.map((item) => {
+        if (item.id === id && item.qtd > 0) item.qtd -= 1;
+        return item;
+      });
+      this.setState({ items: product }, this.updateTotalPrice);
     }
   }
 
   render() {
-    const { items, loading } = this.state;
+    const { items, loading, totalPrice } = this.state;
     const empty = (
       <p data-testid="shopping-cart-empty-message">Seu carrinho está vazio</p>
     );
-    const totalPrice = 0;
     const cart = (
       items
         .map((product) => (
@@ -93,6 +87,7 @@ export default class ShoppingCart extends Component {
               name="decrease"
               data-testid="product-decrease-quantity"
               onClick={ this.handleClick }
+              id={ product.id }
             >
               -
             </button>
@@ -106,7 +101,7 @@ export default class ShoppingCart extends Component {
             >
               +
             </button>
-            <p>{`R$ ${product.price}`}</p>
+            <p>{`R$ ${product.price * product.qtd}`}</p>
           </div>
         ))
     );
@@ -119,7 +114,7 @@ export default class ShoppingCart extends Component {
         <p>
           R$
           {' '}
-          {totalPrice > 0 ? totalPrice : 0}
+          {totalPrice}
         </p>
       </div>
     );
