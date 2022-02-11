@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import PropTypes, { string, number } from 'prop-types';
+import PropTypes, { string, number, bool } from 'prop-types';
 import { Link } from 'react-router-dom';
 import './styles/cardItem.css';
 import CardButton from './CartButton';
@@ -12,6 +12,7 @@ export default class CardItem extends Component {
       thumbnail,
       listProducts,
       id,
+      shipping: { free_shipping: freeShipping },
     } = this.props;
     return (
       <div
@@ -24,6 +25,7 @@ export default class CardItem extends Component {
           <img src={ thumbnail } alt={ title } />
           <p>{ price }</p>
         </Link>
+        { freeShipping && <h4 data-testid="free-shipping">Frete Grátis</h4>}
         <CardButton listProducts={ listProducts } />
       </div>
     );
@@ -40,4 +42,7 @@ CardItem.propTypes = {
     name: string,
     price: number,
   })).isRequired,
+  shipping: PropTypes.shape({
+    free_shipping: bool,
+  }).isRequired,
 };
