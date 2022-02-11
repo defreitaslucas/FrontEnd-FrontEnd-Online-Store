@@ -8,7 +8,7 @@ export default class ShoppingCart extends Component {
   state = {
     items: [],
   }
-  
+
   componentDidMount() {
     this.setState({ items: this.getItemFromStorage() });
   }
