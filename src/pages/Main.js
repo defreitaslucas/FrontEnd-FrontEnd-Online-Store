@@ -63,7 +63,11 @@ export default class Main extends Component {
           product.qtd = 0;
           return (
             <div key={ product.id }>
-              <CardItem { ...product } listProducts={ listProducts } countItemsOnCart={ this.countItemsOnCart } />
+              <CardItem
+                { ...product }
+                listProducts={ listProducts }
+                countItemsOnCart={ this.countItemsOnCart }
+              />
             </div>);
         })}
       </div>);

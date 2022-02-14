@@ -39,7 +39,6 @@ export default class CardButton extends Component {
           data-testid="product-add-to-cart"
           type="button"
           id="cartButton"
-          /* onClick={ this.addCartLocalStorage } */
           onClick={ this.addToLocalFromPageDetails }
         >
           Add
@@ -55,5 +54,5 @@ CardButton.propTypes = {
     name: string,
     price: number,
   })).isRequired,
-
+  countItemsOnCart: PropTypes.func.isRequired,
 };
