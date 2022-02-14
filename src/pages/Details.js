@@ -77,6 +77,8 @@ export default class Details extends Component {
         Detalhes
         <Link data-testid="shopping-cart-button" to="/cart">
           <img src={ cartIcon } alt="cart icon" />
+          {items && <span data-testid="shopping-cart-size">{items.length}</span>}
+
         </Link>
 
         { loading

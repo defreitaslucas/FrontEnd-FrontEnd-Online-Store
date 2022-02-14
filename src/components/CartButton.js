@@ -24,11 +24,12 @@ export default class CardButton extends Component {
     }
   } */
   addToLocalFromPageDetails = ({ target }) => {
-    const { listProducts } = this.props;
+    const { listProducts, countItemsOnCart } = this.props;
     const addedProductId = target.parentElement.parentElement.id;
     const productObj = listProducts.find((item) => item.id === addedProductId);
-    // productObj.qtd = 1;
+    productObj.qtd = 1;
     addProduct(productObj);
+    countItemsOnCart();
   }
 
   render() {
@@ -54,4 +55,5 @@ CardButton.propTypes = {
     name: string,
     price: number,
   })).isRequired,
+
 };

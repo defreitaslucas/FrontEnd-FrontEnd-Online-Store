@@ -13,6 +13,7 @@ export default class CardItem extends Component {
       thumbnail,
       listProducts,
       id,
+      countItemsOnCart,
       shipping: { free_shipping: freeShipping },
     } = this.props;
     return (
@@ -32,7 +33,7 @@ export default class CardItem extends Component {
             <h4 data-testid="free-shipping">Frete Grátis</h4>
             <img src={ truckFast } alt="frete grátis" />
           </div>)}
-        <CardButton listProducts={ listProducts } />
+        <CardButton listProducts={ listProducts } countItemsOnCart={ countItemsOnCart } />
       </div>
     );
   }
@@ -51,4 +52,5 @@ CardItem.propTypes = {
   shipping: PropTypes.shape({
     free_shipping: bool,
   }).isRequired,
+  countItemsOnCart: PropTypes.func.isRequired,
 };
