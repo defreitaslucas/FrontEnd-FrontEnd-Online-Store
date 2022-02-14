@@ -78,6 +78,7 @@ export default class ShoppingCart extends Component {
         return item;
       });
       this.setState({ items: product }, this.updateTotalPrice);
+      this.verifyAvailability(id);
     } else {
       const product = items.map((item) => {
         if (item.id === id && item.qtd > 0) item.qtd -= 1;
@@ -85,6 +86,13 @@ export default class ShoppingCart extends Component {
       });
       this.setState({ items: product }, this.updateTotalPrice);
     }
+  }
+
+  verifyAvailability = (id) => {
+    const { items } = this.state;
+    const { available_quantity: availableQuantity, qtd } = items
+      .find((item) => item.id === id);
+    return availableQuantity <= qtd;
   }
 
   render() {
@@ -116,6 +124,7 @@ export default class ShoppingCart extends Component {
               id={ product.id }
               data-testid="product-increase-quantity"
               onClick={ this.handleClick }
+              disabled={ this.verifyAvailability(product.id) }
             >
               +
             </button>
@@ -138,7 +147,6 @@ export default class ShoppingCart extends Component {
     return (
       <div>
         <Link to="/"><img src={ returnIcon } alt="return" /></Link>
-        {/* <img src={ cartIcon } alt="cart" /> */}
         {!loading ? cart : empty}
         {items && totalArea}
         <Link data-testid="checkout-products" to="/checkout">Checkout</Link>
