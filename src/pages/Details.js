@@ -16,11 +16,22 @@ export default class Details extends Component {
     loading: false,
     infoProduct: '',
     id: '',
-    previousReviews: '' };
+    previousReviews: '',
+    items: [] };
 
   componentDidMount() {
     this.getDetailsFromID();
     this.getReviewsStored();
+    this.countItemsOnCart();
+  }
+
+  getItemFromStorage = () => JSON.parse(localStorage.getItem('cartItems'));
+
+  countItemsOnCart = () => {
+    const storage = this.getItemFromStorage();
+    if (storage !== null) {
+      this.setState({ items: storage });
+    }
   }
 
   getDetailsFromID = async () => {
@@ -71,12 +82,13 @@ export default class Details extends Component {
 
   render() {
     const { infoProduct: { title, price, thumbnail },
-      loading, previousReviews } = this.state;
+      loading, previousReviews, items } = this.state;
     return (
       <div>
         Detalhes
         <Link data-testid="shopping-cart-button" to="/cart">
           <img src={ cartIcon } alt="cart icon" />
+          {items && <span data-testid="shopping-cart-size">{items.length}</span>}
         </Link>
 
         { loading

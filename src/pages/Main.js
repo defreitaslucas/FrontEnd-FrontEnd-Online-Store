@@ -17,10 +17,21 @@ export default class Main extends Component {
     queryInput: '',
     listProducts: [],
     loadedProducts: false,
+    items: [],
   }
 
   componentDidMount() {
     this.listCategories();
+    this.countItemsOnCart();
+  }
+
+  getItemFromStorage = () => JSON.parse(localStorage.getItem('cartItems'));
+
+  countItemsOnCart = () => {
+    const storage = this.getItemFromStorage();
+    if (storage !== null) {
+      this.setState({ items: storage });
+    }
   }
 
   onRadioChange = async ({ target }) => {
@@ -48,10 +59,17 @@ export default class Main extends Component {
     if (!listProducts.length) return (<h2>Nenhum produto foi encontrado</h2>);
     return (
       <div className="results-container">
-        { listProducts.map((product) => (
-          <div key={ product.id }>
-            <CardItem { ...product } listProducts={ listProducts } />
-          </div>))}
+        { listProducts.map((product) => {
+          product.qtd = 0;
+          return (
+            <div key={ product.id }>
+              <CardItem
+                { ...product }
+                listProducts={ listProducts }
+                countItemsOnCart={ this.countItemsOnCart }
+              />
+            </div>);
+        })}
       </div>);
   }
 
@@ -61,7 +79,7 @@ export default class Main extends Component {
   }
 
   render() {
-    const { loadedProducts } = this.state;
+    const { loadedProducts, items } = this.state;
     return (
       <main className="main-container">
         <Categories
@@ -78,6 +96,8 @@ export default class Main extends Component {
         </div>
         <Link data-testid="shopping-cart-button" to="/cart">
           <img src={ cartIcon } alt="cart icon" />
+          {console.log(items)}
+          {items && <span data-testid="shopping-cart-size">{items.length}</span>}
         </Link>
       </main>
     );
